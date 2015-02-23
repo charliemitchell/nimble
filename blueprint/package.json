@@ -1,0 +1,9 @@
+{
+  "name": "MyCoolService",
+  "version": "0.0.1",
+  "description": "About My Service",
+  "author": "",
+  "dependencies": {
+    "nimbleservice" : "latest"
+  }
+}
