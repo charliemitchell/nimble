@@ -72,32 +72,45 @@ module.exports = function () {
 
         // Bind The Routes
         //GET
-        router.GET.forEach(function (route) {
-            verbose("Nimble: Binding Route :: GET".grey, (route.path).grey/*, " #action".grey, (route.action).grey*/);
-            app.get(route.path, applyPolicy(route.policy, controller[route.action]));
-        });
+        if (router.GET) {
+            router.GET.forEach(function (route) {
+                verbose("Nimble: Binding Route :: GET".grey, (route.path).grey/*, " #action".grey, (route.action).grey*/);
+                app.get(route.path, applyPolicy(route.policy, controller[route.action]));
+            });
+        }
 
         // POST
-        router.POST.forEach(function (route) {
-            verbose("Nimble: Binding Route :: POST".grey, (route.path).grey/*, " #action".grey, (route.action).grey*/);
-            app.post(route.path, applyPolicy(route.policy, controller[route.action]));
-        });
+        if (router.POST) {
+            router.POST.forEach(function (route) {
+                verbose("Nimble: Binding Route :: POST".grey, (route.path).grey/*, " #action".grey, (route.action).grey*/);
+                app.post(route.path, applyPolicy(route.policy, controller[route.action]));
+            });
+        }
 
         // PUT
-        router.PUT.forEach(function (route) {
-            verbose("Nimble: Binding Route :: PUT".grey, (route.path).grey/*, " #action".grey, (route.action).grey*/);
-            app.put(route.path, applyPolicy(route.policy, controller[route.action]));
-        });
+        if (router.PUT) {
+            router.PUT.forEach(function (route) {
+                verbose("Nimble: Binding Route :: PUT".grey, (route.path).grey/*, " #action".grey, (route.action).grey*/);
+                app.put(route.path, applyPolicy(route.policy, controller[route.action]));
+            });
+        }
 
         // DELETE
-        router.DELETE.forEach(function (route) {
-            verbose("Nimble: Binding Route :: DELETE".grey, (route.path).grey/*, " #action".grey, (route.action).grey*/);
-            app.delete(route.path, applyPolicy(route.policy, controller[route.action]));
-        });
+        if (router.DELETE) {
+            router.DELETE.forEach(function (route) {
+                verbose("Nimble: Binding Route :: DELETE".grey, (route.path).grey/*, " #action".grey, (route.action).grey*/);
+                app.delete(route.path, applyPolicy(route.policy, controller[route.action]));
+            });
+        }
+        
+
+        // Allow Using Custom Middleware
+        if (middleware.custom) {
+            middleware.custom(app, express);
+        }
 
         // Launch server
-
-        app.listen(config.port);
+        app.listen(config.port || 4242);
         require('dns').lookup(require('os').hostname(), function (err, add, fam) {
           console.log('Nimble: Server Listening On:'.green, (add + ':' + config.port.toString()).green);
         });
