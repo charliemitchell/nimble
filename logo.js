@@ -8,20 +8,24 @@ function serverstart () {
         ((today.getSeconds() < 10)?"0":"") + today.getSeconds() + 
         ((today.getHours()>12)?('PM'):'AM'); 
 }
+var this_package_json = JSON.parse(require('fs').readFileSync(require('path').join(__dirname, '/package.json')));
 
-var ascii = '\n\n' +
+console.log(("\n\n  " + JSON.parse(require('fs').readFileSync(require('path').join(process.cwd(), '/package.json'))).name.toUpperCase()).green);
+
+var ascii = '' +
 
 "  ███╗   ██╗ ██╗ ███╗   ███╗ ██████╗  ██╗     ███████╗ \n" +
 "  ████╗  ██║ ██║ ████╗ ████║ ██╔══██╗ ██║     ██╔════╝ \n" +
 "  ██╔██╗ ██║ ██║ ██╔████╔██║ ██████╔╝ ██║     █████╗   \n" +
 "  ██║╚██╗██║ ██║ ██║╚██╔╝██║ ██╔══██╗ ██║     ██╔══╝   \n" +
 "  ██║ ╚████║ ██║ ██║ ╚═╝ ██║ ██████╔╝ ███████╗███████╗ \n" +
-"  ╚═╝  ╚═══╝ ╚═╝ ╚═╝     ╚═╝ ╚═════╝  ╚══════╝╚══════╝  v0.0.10\n";
+"  ╚═╝  ╚═══╝ ╚═╝ ╚═╝     ╚═╝ ╚═════╝  ╚══════╝╚══════╝  v"+this_package_json.version+"\n";
 
 ascii += "  > Service Starting...\n";
 ascii += "  > " + serverstart() + "\n";
 ascii += "  > working directory : " + process.cwd() + "\n";
 ascii += "  > To shut down, press <CTRL> + C at any time.\n";
+
 
 module.exports = function () {
     console.log(ascii.grey)
