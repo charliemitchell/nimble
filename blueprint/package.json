@@ -4,6 +4,6 @@
   "description": "About My Service",
   "author": "",
   "dependencies": {
-    "mikros" : "latest"
+    "nimbleservice" : "latest"
   }
 }
