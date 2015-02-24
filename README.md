@@ -21,4 +21,4 @@ More Docs Coming Soon.
 
 
 ## GITHUB
-* [nimbleservice](http://github.com/charliemitchell/mikros) 
+* [mikros](http://github.com/charliemitchell/mikros) 
