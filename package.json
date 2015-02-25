@@ -1,6 +1,6 @@
 {
   "name": "nimbleservice",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "A node Js Framework for microservices, express and mongoose. API Only",
   "main": "./lib/index.js",
   "author": "Charlie Mitchell",
