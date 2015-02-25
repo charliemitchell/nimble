@@ -25,6 +25,12 @@ if (argv.v || argv.version || (argv._[0] && _.contains(['v', 'version'], argv._[
 } else if (argv.s || argv.server || (argv._[0] && _.contains(['s', 'server'], argv._[0]))) {
     require(process.cwd() + '/node_modules/nimbleservice/service')(config);
 } else if (argv.a || argv.api || (argv._[0] && _.contains(['a', 'api'], argv._[0]))) {
+    // Important We don't want to lose any work by accidently typing the wrong command
+    if (fs.existsSync(path.join(process.cwd(), '/model.js'))) {
+        console.log("It looks like you already created a service. Nimble will refuse to overwrite an existing service. Coming Soon: 'nimbleapi' this framework will support multiple APIs.".red);
+        return;
+    }
+
     if (argv._[1]) {
         console.log("Generate API For", argv._[1]);
         ncp(path.resolve((__dirname).replace('bin', ""), 'blueprint'), process.cwd(), function(err) {
