@@ -1,7 +1,7 @@
 require('colors');
 var redis = require("redis"),
     config = require(process.cwd() + '/config'),
-    client = redis.createClient(),
+    client = redis.createClient(config.redis.port, config.redis.host),
     verbose = require('./logger').onVerbose;
 
 var middleware = {
