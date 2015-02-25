@@ -13,11 +13,25 @@ More Docs Coming Soon.
 ## Running / Development
 
 *  to create a new nimble service 
-*  * Create a Folder Named foo: `nimble new foo`
-*  * Go Inside the folder: `cd foo`
-*  * Generate a Service that listens to the route bar: `nimble api bar`
-*  * Start The Server: `nimble s`
+ * Create a Folder Named foo: `nimble new foo`
+ * Go Inside the folder: `cd foo`
+ * Generate a Service that listens to the route bar: `nimble api bar`
+ * Start The Server: `nimble s`
 * Visit your app at [http://localhost:4242/bar](http://localhost:4242/bar).
+
+## Some Built In Validations
+Nimble comes packaged with some built in validations for your model. We use Google's Caja (the sanitize package) as the default sanitizer, furthermore we have built in some really nice features around the mongoose setter. So far we have provided some common transformations.
+* sentence case
+ * lor ipsom. dol amore. --> Lor ipsom. Dol amore. 
+* lower case
+ * Myemail@Mail.com --> myemail@mail.com
+* upper case
+ * acme inc --> ACME INC
+* title case
+ * acme inc --> Acme Inc
+* number
+ * '1234' --> 1234 
+* sanitize
 
 ## Mimimal setup required...
 ### Open your config file...
@@ -75,7 +89,8 @@ More Docs Coming Soon.
         // <--- Define your model in here
         /* Example
             name : {
-                type : String
+                type : String,
+                setter : setter.titleCase
             },
             address : {
                 type : String
