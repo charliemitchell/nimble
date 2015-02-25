@@ -3,28 +3,28 @@ module.exports = {
     GET : [{
         path : '/{{api}}',
         action : 'GET',
-        policy : 'authenticated'
+        // policy : 'authenticated'
     },{
         path : '/{{api}}/:id',
         action : 'findOne',
-        policy : 'authenticated'
+        // policy : 'authenticated'
     }],
     
     POST : [{
         path : '/{{api}}',
         action : 'POST',
-        policy : 'authenticated'
+        // policy : 'authenticated'
     }],
     
     PUT : [{
         path : '/{{api}}/:id',
         action : 'PUT',
-        policy : 'authenticated'
+        // policy : 'authenticated'
     }],
 
     DELETE : [{
         path : '/{{api}}/:id',
         action : 'DELETE',
-        policy : 'authenticated'
+        // policy : 'authenticated'
     }]
 }
