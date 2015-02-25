@@ -112,7 +112,7 @@ module.exports = function () {
         // Launch server
         app.listen(config.port || 4242);
         require('dns').lookup(require('os').hostname(), function (err, add, fam) {
-          console.log('Nimble: Server Listening On:'.green, (add + ':' + config.port.toString()).green);
+          console.log('  > Nimble: Server Listening On:'.green, (add + ':' + config.port.toString()).green);
         });
     });
 }

@@ -9,8 +9,9 @@ function serverstart () {
         ((today.getHours()>12)?('PM'):'AM'); 
 }
 var this_package_json = JSON.parse(require('fs').readFileSync(require('path').join(__dirname, '/package.json')));
+var their_package = JSON.parse(require('fs').readFileSync(require('path').join(process.cwd(), '/package.json')));
 
-console.log(("\n\n  " + JSON.parse(require('fs').readFileSync(require('path').join(process.cwd(), '/package.json'))).name.toUpperCase()).green);
+console.log(("\n\n  [ " + their_package.name.toUpperCase() + "  v" +  their_package.version + " ]"));
 
 var ascii = '' +
 
@@ -19,7 +20,7 @@ var ascii = '' +
 "  ██╔██╗ ██║ ██║ ██╔████╔██║ ██████╔╝ ██║     █████╗   \n" +
 "  ██║╚██╗██║ ██║ ██║╚██╔╝██║ ██╔══██╗ ██║     ██╔══╝   \n" +
 "  ██║ ╚████║ ██║ ██║ ╚═╝ ██║ ██████╔╝ ███████╗███████╗ \n" +
-"  ╚═╝  ╚═══╝ ╚═╝ ╚═╝     ╚═╝ ╚═════╝  ╚══════╝╚══════╝  v"+this_package_json.version+"\n";
+"  ╚═╝  ╚═══╝ ╚═╝ ╚═╝     ╚═╝ ╚═════╝  ╚══════╝╚══════╝  v" +(this_package_json.version)+"\n";
 
 ascii += "  > Service Starting...\n";
 ascii += "  > " + serverstart() + "\n";
