@@ -1,6 +1,6 @@
 
 # NIMBLE
-##### Currently this project is under heavy development. There are some major fixes coming soon.
+##### Currently this project is under heavy development... Expect there to be a bit of version-itus until v1.0.0
 More Docs Coming Soon.
 
 ## Prerequisites

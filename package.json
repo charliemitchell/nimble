@@ -1,10 +1,13 @@
 {
   "name": "nimbleservice",
-  "version": "0.0.15",
-  "description": "A node Js Framework for microservices, express and mongoose. API Only",
+  "version": "0.0.18",
+  "description": "A node Js Framework for rapidly building microservice API's. A Wrapper around express and mongoose with some built in transformations.",
   "main": "./lib/index.js",
-  "author": "Charlie Mitchell",
+  "author": "Charlie Mitchell <charliesemailis@gmail.com>",
+  "contributors" : ["Vincent Pham <anhvuphamx@yahoo.com> (http://github.com/anhvupham/)"],
   "license": "MIT",
+  "keywords" : ["micro service", "microservice", "service", "framework", "api", "api only", "mongoose", "express", "node api", "REST", "rest generator"],
+
   "bugs": {
     "url": "http://github.com/charliemitchell/nimble",
     "email": "charliesemailis@gmail.com"
