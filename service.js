@@ -2,6 +2,8 @@ module.exports = function () {
     require('./logo')();
     require('./exitHandler')();
     
+    console.log("LINKED NIMBLE");
+
     var application_root = __dirname,
         globalReport = require('./globalReport'),
         express = require("express"),
