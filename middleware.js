@@ -31,17 +31,17 @@ var middleware = {
     readSession: function(req, res, next) {
         var session = require('express-session');
         var RedisStore = require('connect-redis')(session);
-        var store = new RedisStore(options);
         var redis = require('redis');
         var client = redis.createClient(config.redis.port, config.redis.host);
         var cookieparser = require('cookie-parser');
         var cookie = require('express/node_modules/cookie');
-        var options = {
+        var store = new RedisStore({
             host: config.redis.host,
             port: config.redis.port,
             prefix: config.redis.key,
             client: client
-        };
+        });
+
 
         if (req.headers.cookie) {
             var cookieItem = cookie.parse(req.headers.cookie);
