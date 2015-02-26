@@ -1,5 +1,12 @@
 module.exports = function () {
-    require('./logo')();
+    var config = require(process.cwd() +'/config');
+    // Support Hiding the logo
+    if (config.hideLogo !== true) {
+        require('./logo')();
+    } else {
+        console.log("  > Service Starting...".green)
+    }
+
     require('./exitHandler')();
     
     var application_root = __dirname,
@@ -7,7 +14,6 @@ module.exports = function () {
         express = require("express"),
         path = require("path"),
         mongoose = require('mongoose'),
-        config = require(process.cwd() +'/config'),
         config_session = require(process.cwd() +'/session'),
         app = express(),
         router = require(process.cwd() +'/router'),

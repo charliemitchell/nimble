@@ -5,11 +5,13 @@ var _ = require('lodash'),
     ncp = require('ncp').ncp,
     path = require('path'),
     child = require('child_process');
+
 require('colors')
 var argv = require('optimist').argv;
 var config = {};
 
 // Get the nimble version
+var version = JSON.parse(fs.readFileSync(path.join((__dirname).replace('bin', ""), '/package.json'))).version;
 
 if (argv.v || argv.verbose || (argv._[0] && _.contains(['v', 'verbose'], argv._[0]))) {
     config.verbose = true;
@@ -17,10 +19,10 @@ if (argv.v || argv.verbose || (argv._[0] && _.contains(['v', 'verbose'], argv._[
 
 
 if (argv.v || argv.version || (argv._[0] && _.contains(['v', 'version'], argv._[0]))) {
-    console.log('v 0.0.1');
+    console.log('v' + version);
 } else if (argv._.length === 0) {
     console.log('');
-    console.log('Welcome to Nimble! (v 0.0.1)');
+    console.log('Welcome to Nimble! (v' + version + ')');
     console.log('');
 } else if (argv.s || argv.server || (argv._[0] && _.contains(['s', 'server'], argv._[0]))) {
     require(process.cwd() + '/node_modules/nimbleservice/service')(config);
@@ -56,6 +58,6 @@ if (argv.v || argv.version || (argv._[0] && _.contains(['v', 'version'], argv._[
     if (argv._[1]) {
         var folder = path.join(process.cwd(), argv._[1]);
         fs.mkdirSync(folder);
-        console.log('Creating service.. cd into the service and run "nimble api yourapi"');
+        console.log('Creating service.. cd into ' +argv._[1] +  ' and run "nimble api yourapi"');
     }
 }

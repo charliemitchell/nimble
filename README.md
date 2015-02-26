@@ -141,4 +141,4 @@ module.exports = {
 
 
 ## GITHUB
-* [nimbleservice](http://github.com/charliemitchell/mikros) 
+* [nimbleservice](http://github.com/charliemitchell/nimble) 

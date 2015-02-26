@@ -5,13 +5,13 @@
   "main": "./lib/index.js",
   "author": "Charlie Mitchell",
   "license": "MIT",
-  "bugs" : { 
-    "url" : "http://github.com/charliemitchell/nimble", 
-    "email" : "charliesemailis@gmail.com"
+  "bugs": {
+    "url": "http://github.com/charliemitchell/nimble",
+    "email": "charliesemailis@gmail.com"
   },
-  "repository" : { 
-    "type" : "git", 
-    "url" : "http://github.com/charliemitchell/nimble.git"
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/charliemitchell/nimble.git"
   },
   "bin": {
     "nimble": "./bin/nimble.js"
