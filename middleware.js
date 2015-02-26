@@ -33,7 +33,7 @@ var middleware = {
         var RedisStore = require('connect-redis')(session);
         var store = new RedisStore(options);
         var redis = require('redis');
-        var client = redis.createClient();
+        var client = redis.createClient(config.redis.port, config.redis.host);
         var cookieparser = require('cookie-parser');
         var cookie = require('express/node_modules/cookie');
         var options = {
@@ -49,7 +49,8 @@ var middleware = {
                 var sessionId = cookieparser.signedCookie(cookieItem[config.cookie.name], config.secret);
                 store.get(sessionId, function(err, session) {
                     if (err) {
-                        callback(err, '');
+                        console.log(err);
+                        next();
                     } else {
                         if (!session) {
                             next();
