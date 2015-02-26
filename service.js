@@ -8,7 +8,7 @@ module.exports = function () {
     }
 
     require('./exitHandler')();
-    
+
     var application_root = __dirname,
         globalReport = require('./globalReport'),
         express = require("express"),
