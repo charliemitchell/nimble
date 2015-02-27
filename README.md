@@ -1,10 +1,12 @@
 
 # NIMBLE
-##### Currently this project is under heavy development... Expect there to be a bit of version-itus until v1.0.0
-More Docs Coming Soon.
+##### Currently this project is under heavy development...
+Expect there to be a bit of version-itus until v1.0.0
 
 ## Prerequisites
 * [Node.js](http://nodejs.org/) (with NPM)
+* [Redis](http://redis.io/)
+* [Mongo DB](http://mongodb.org/)
 
 ## Installation
 
@@ -37,36 +39,26 @@ Nimble comes packaged with some built in validations for your model. We use Goog
 ### Open your config file...
 ```js
     module.exports = {
-    
-        verbose : false,
-
-        reportGlobalVars : true,
-
-        port : 4242,  // What port should this service handle
-
-        bodyParser : 'json', // What Kind of API is this [https://www.npmjs.com/package/body-parser]
+            
+        port : 4242,  // <--------- What port should this service handle
         
-        // Used For Session
         redis : {
           host: 'localhost',
           port: 6379,
-          key : 'sess:' // <---- Change this to match your session key in redis
+          key : 'sess:' // <-------- Change this to match your session key in redis
         },
+
         cookie : {
           name : 'yourcookie.sid',  // <---- Change this to match your cookie name
         },
-        // MongoDB
+        
         mongodb : {
             host : 'localhost',
             port : 27017,
             database : 'yourdatabase' // <!-- CHANGE THIS to match your database
-        },
-        
-        // CSRF
-        csrf : {
-            // Coming Soon
         }
 
+        // etc...
     }
 ```
 
@@ -74,17 +66,6 @@ Nimble comes packaged with some built in validations for your model. We use Goog
 (This will be pre-generated, all you have to do is define your model)
 
 ```js
-    /*
-        Desription of Model
-        :: Boilerplate
-        About Mongoose :: mongoosejs.com
-    */
-    var mongoose = require('nimbleservice').mongoose,
-        Schema = mongoose.Schema,
-        validator = require('nimbleservice').validate,
-        setter = require('nimbleservice').setter;
-    /* Edit Your Model Below */
-    
     var Bar = new Schema({
         // <--- Define your model in here
         /* Example
@@ -97,18 +78,6 @@ Nimble comes packaged with some built in validations for your model. We use Goog
             }
         */
     });
-    
-    // This is put in for your convinience (_id to id)
-    Bar.virtual('id').get(function(){
-        return this._id.toHexString();
-    });
-    
-    Bar.set('toJSON', {
-        virtuals: true
-    });
-
-    mongoose.model('Bar', Bar);
-    module.exports = mongoose.model('Bar');
 ```
 
 ### Lastly Setup your Policy,
@@ -117,12 +86,12 @@ Nimble comes packaged with some built in validations for your model. We use Goog
 module.exports = {
     
     onFailure : function (req, res) {
-        res.json({auth : false, error : "Not Logged In"});
+        res.json({auth : false, error : "Not Logged In"}); <---- What do you do when they are not logged in
     },
 
     authenticated : function (req, res) {
         if (req.session) {
-            if (req.session.loggedin) {
+            if (req.session.loggedin) { <--- what key on the session say's they are logged in ?
                 return true;
             } else {
                 return false;
