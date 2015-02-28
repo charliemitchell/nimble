@@ -1,5 +1,7 @@
 module.exports = {
     
+    sessionless : false, // Set True if you don't want to use a session
+
     verbose : false,
 
     reportGlobalVars : true,

@@ -39,7 +39,6 @@ module.exports = function () {
                 } else { // No Policy, Allow it
                     method(req, res);
                 }
-                
             }
         };
 
@@ -62,7 +61,12 @@ module.exports = function () {
         app.use(require('body-parser')[config.bodyParser]());
         app.use(require('method-override')());
         app.use(cookieParser());
-        app.use(middleware.readSession);   
+
+        // Support Users Who don't need a session
+        if (!config.sessionless) {
+            app.use(middleware.readSession);
+        }
+        
         app.use(middleware.onRequest);
         
         app.use(function (req, res, next) {
