@@ -64,7 +64,10 @@ module.exports = function () {
 
         // Support Users Who don't need a session
         if (!config.sessionless) {
+            verbose("Nimble: Skipping Session Middleware");
             app.use(middleware.readSession);
+        } else {
+            verbose("Nimble: Using Session Middleware");
         }
         
         app.use(middleware.onRequest);
