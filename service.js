@@ -1,5 +1,6 @@
 module.exports = function () {
-    var hooks;
+    var hooks,
+        fs = require('fs');
 
     // Prevent Version Issue
     if (fs.existsSync(process.cwd() +'/hooks')) {
