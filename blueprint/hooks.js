@@ -1,5 +1,5 @@
 module.exports = {
-    app : function (app, express) {
+    app : function (server, app, express) {
         
     },
 
@@ -7,25 +7,25 @@ module.exports = {
 
     },
 
-    onBeforeBodyParser : function (app, express) {
+    onBeforeBodyParser : function (server, app, express) {
 
     },
 
-    onBeforeMethodOverride : function (app, express) {
+    onBeforeMethodOverride : function (server, app, express) {
 
     },
     
-    onBeforeCookieParser : function (app, express) {
+    onBeforeCookieParser : function (server, app, express) {
 
     },
 
-    onBeforeRouter : function (app, express) {
+    onBeforeRouter : function (server, app, express) {
 
     },
-    onBeforeListen : function (app, express) {
+    onBeforeListen : function (server, app, express) {
 
     },
-    onAfterListen : function (app, express) {
+    onAfterListen : function (server, app, express) {
 
     }
 };
