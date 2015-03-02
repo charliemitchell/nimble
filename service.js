@@ -1,5 +1,16 @@
 module.exports = function () {
+    var hooks;
+
+    // Prevent Version Issue
+    if (fs.existsSync(process.cwd() +'/hooks')) {
+        hooks = require(process.cwd() +'/hooks');
+    } else {
+        console.log("nimbleservice now supports a hooks file. Grab one from our github at http://raw.githubusercontent.com/charliemitchell/nimble/master/blueprint/hooks.js");
+        hooks = {};
+    }
+
     var config = require(process.cwd() +'/config');
+        
     // Support Hiding the logo
     if (config.hideLogo !== true) {
         require('./logo')();
@@ -42,6 +53,10 @@ module.exports = function () {
             }
         };
 
+    if (hooks.app) {
+        verbose("Nimble: Configuring App");
+        hooks.app(app, express);
+    }
 
     verbose("Nimble: Exposing Global Objects".yellow);
 
@@ -50,26 +65,55 @@ module.exports = function () {
         
         verbose('Nimble: Globals Registered ::'.magenta, (globalReport()).magenta);
         
+        if (hooks.onBeforeMongoose) {
+            verbose("Nimble: Configuring Mongoose");
+            hooks.onBeforeMongoose(mongoose, app, express);
+        }
 
         // Connect To MongoDB using our ORM
         mongoose.connect('mongodb://'+config.mongodb.host+':'+config.mongodb.port + '/' + config.mongodb.database);
+
         verbose("Nimble: Connecting To".yellow, ('mongodb://'+config.mongodb.host+':'+config.mongodb.port + '/' + config.mongodb.database).yellow);
 
         verbose("Nimble: Configuring Express Server".yellow)
         // Config
 
+        if (hooks.onBeforeBodyParser) {
+            verbose("Nimble: onBeforeBodyParser");
+            hooks.onBeforeBodyParser(app, express);
+        }
+        
         app.use(require('body-parser')[config.bodyParser]());
+        
+        
+        if (hooks.onBeforeMethodOverride) {
+            verbose("Nimble: onBeforeMethodOverride");
+            hooks.onBeforeMethodOverride(app, express);
+        }
+
         app.use(require('method-override')());
+        
+        if (hooks.onBeforeCookieParser) {
+            verbose("Nimble: onBeforeCookieParser");
+            hooks.onBeforeCookieParser(app, express);
+        }
+
         app.use(cookieParser());
+
+
+        if (hooks.onBeforeReadSession) {
+            verbose("Nimble: onBeforeReadSession");
+            hooks.onBeforeReadSession(app, express);
+        }
 
         // Support Users Who don't need a session
         if (!config.sessionless) {
-            verbose("Nimble: Skipping Session Middleware");
+            verbose("Nimble: Using Session Middleware");
             app.use(middleware.readSession);
         } else {
-            verbose("Nimble: Using Session Middleware");
+            verbose("Nimble: Skipping Session Middleware");
         }
-        
+
         app.use(middleware.onRequest);
         
         app.use(function (req, res, next) {
@@ -79,7 +123,14 @@ module.exports = function () {
             next();
         });
 
+        if (hooks.onBeforeRouter) {
+            verbose("Nimble: onBeforeRouter");
+            hooks.onBeforeRouter(app, express);
+        }
+
         app.use(app.router);
+        
+
         app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
         
 
@@ -116,16 +167,27 @@ module.exports = function () {
             });
         }
         
-
         // Allow Using Custom Middleware
         if (middleware.custom) {
             middleware.custom(app, express);
         }
 
+        if (hooks.onBeforeListen) {
+            verbose("Nimble: onBeforeListen");
+            hooks.onBeforeListen(app, express);
+        }
+
         // Launch server
         app.listen(config.port || 4242);
+
+        if (hooks.onAfterListen) {
+            verbose("Nimble: onBeforeListen");
+            hooks.onAfterListen(app, express);
+        }
+
         require('dns').lookup(require('os').hostname(), function (err, add, fam) {
           console.log('  > Nimble: Server Listening On:'.green, (add + ':' + config.port.toString()).green);
         });
+
     });
 }

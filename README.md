@@ -103,8 +103,8 @@ module.exports = {
 };
 ```
 
-
-### AT this point your up and running and have A Fully functioning REST SERVICE
+### More fine grained control.
+The Hooks File Provides hooks that fire while your server is being constructed. You can acess the app object as well as the express object using these hooks. This way if you need to extend the app object before or after a specific "app.use" you can do this here. The hooks object will fire sequentially from top to bottom so it makes it easy to figure out in what order the app is being configured, as well as at what point you would like to extend the app object.
 
 
 
