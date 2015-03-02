@@ -171,7 +171,7 @@ module.exports = function () {
         
         // Allow Using Custom Middleware
         if (middleware.custom) {
-            middleware.custom(server, app, express);
+            middleware.custom(app, express);
         }
 
         if (hooks.onBeforeListen) {
