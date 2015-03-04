@@ -31,4 +31,6 @@ module.exports = {
 
     }
 
+    secret: 'Your session secret'
+
 }

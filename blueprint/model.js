@@ -20,5 +20,5 @@ var {{model}} = new Schema({
     virtuals: true
 });
 
-mongoose.model('{{model}}', {{model}});
+mongoose.model('{{model}}', {{model}}, '{{model}}');
 module.exports = mongoose.model('{{model}}');
