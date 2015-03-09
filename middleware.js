@@ -30,7 +30,7 @@ var middleware = {
     readSession: function(req, res, next) {
 
         var session = require('express-session'),
-            RedisStore = require('connect-redis')(session),
+            RedisStore = require('connect-redis')(require('nimbleservice').express),
             redis = require('redis'),
             client = redis.createClient(config.redis.port, config.redis.host),
             cookieparser = require('cookie-parser'),
@@ -46,7 +46,7 @@ var middleware = {
         if (req.headers.cookie) {
             var cookieItem = cookie.parse(req.headers.cookie);
             if (cookieItem[config.cookie.name]) {
-                var sessionId = cookieparser.signedCookie(cookieItem[config.cookie.name], config.secret);
+                var sessionId = cookieparser.signedCookie(cookieItem[config.cookie.name], config.cookie.secret);
                 store.get(sessionId, function(err, session) {
                     if (err) {
                         console.log(err);

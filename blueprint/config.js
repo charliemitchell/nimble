@@ -18,6 +18,7 @@ module.exports = {
     },
     cookie : {
       name : 'yourcookie.sid',
+      secret: 'Your session secret'
     },
     // MongoDB
     mongodb : {
@@ -29,8 +30,6 @@ module.exports = {
     // CSRF
     csrf : {
 
-    },
-
-    secret: 'Your session secret'
+    }
 
 }
