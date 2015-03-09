@@ -26,7 +26,6 @@ module.exports = function () {
         express = require("express"),
         path = require("path"),
         mongoose = require('mongoose'),
-        config_session = require(process.cwd() +'/session'),
         app = express(),
         server = require('http').Server(app),
         router = require(process.cwd() +'/router'),
@@ -130,10 +129,7 @@ module.exports = function () {
             hooks.onBeforeRouter(server, app, express);
         }
 
-        app.use(app.router);
-        
-
-        app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
+        app.use(require('errorhandler')({ dumpExceptions: true, showStack: true }));
         
 
         // Bind The Routes
