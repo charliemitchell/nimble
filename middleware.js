@@ -1,7 +1,19 @@
-require('colors');
 var redis = require("redis"),
     config = require(process.cwd() + '/config'),
-    verbose = require('./logger').onVerbose;
+    verbose = require('./logger').onVerbose,
+    cookieparser = require('cookie-parser'),
+    cookie = require('express/node_modules/cookie'),
+    session = require('express-session'),
+    RedisStore = require('connect-redis')(session),
+    client = redis.createClient(config.redis.port, config.redis.host),
+    store = new RedisStore({
+        host: config.redis.host,
+        port: config.redis.port,
+        prefix: config.redis.key,
+        client: client
+    });
+
+require('colors');
 
 var middleware = {
 
@@ -29,33 +41,19 @@ var middleware = {
     // Gets The Session Object from Redis
     readSession: function(req, res, next) {
 
-        var session = require('express-session'),
-            RedisStore = require('connect-redis')(require('nimbleservice').express),
-            redis = require('redis'),
-            client = redis.createClient(config.redis.port, config.redis.host),
-            cookieparser = require('cookie-parser'),
-            cookie = require('express/node_modules/cookie'),
-            store = new RedisStore({
-                host: config.redis.host,
-                port: config.redis.port,
-                prefix: config.redis.key,
-                client: client
-            });
-
-
         if (req.headers.cookie) {
             var cookieItem = cookie.parse(req.headers.cookie);
             if (cookieItem[config.cookie.name]) {
                 var sessionId = cookieparser.signedCookie(cookieItem[config.cookie.name], config.cookie.secret);
-                store.get(sessionId, function(err, session) {
+                store.get(sessionId, function(err, thisSession) {
                     if (err) {
                         console.log(err);
                         next();
                     } else {
-                        if (!session) {
+                        if (!thisSession) {
                             next();
                         } else {
-                            req.session = session;
+                            req.session = thisSession;
                             next();
                         }
                     }
@@ -68,11 +66,11 @@ var middleware = {
         }
     },
 
-    onAfterController: function() {},
-    onAfterGET: function() {},
-    onAfterPOST: function() {},
-    onAfterPUT: function() {},
-    onAfterDELETE: function() {}
+    onAfterController : function() {},
+    onAfterGET : function() {},
+    onAfterPOST : function() {},
+    onAfterPUT : function() {},
+    onAfterDELETE : function() {}
 };
 
 module.exports = middleware;
