@@ -29,7 +29,7 @@ module.exports = {
     // CSRF
     csrf : {
 
-    }
+    },
 
     secret: 'Your session secret'
 
