@@ -3,10 +3,15 @@
 ##### Currently this project is under heavy development...
 Expect there to be a bit of version-itus until v1.0.0
 
-## Prerequisites
+## Required
 * [Node.js](http://nodejs.org/) (with NPM)
-* [Redis](http://redis.io/)
 * [Mongo DB](http://mongodb.org/)
+
+
+## Optional
+* [Redis](http://redis.io/) (No longer a requirement unless you are using a session)
+* [Rabbit MQ](https://www.rabbitmq.com) (Pub/Sub)
+
 
 ## Installation
 
@@ -178,7 +183,8 @@ Then in your hooks file or your controller require in rabbit.
         body : "Hello Pub/Sub"
     });
 ```
-
+The basics are there for you, although you may want to extend this a bit further if you need a more complex pub/sub.
+just open up the rabbit.js file and add any methods you need. Wascally will install as a dependency for your app, not nimbleservice. Lastly, You can manage the config for this in your config file.
 
 ### Nimble Service Exposes any of it's dependencies to you via the nimbleservice object.
 This way we don't need to have duplicate dependencies.
@@ -195,4 +201,4 @@ This way we don't need to have duplicate dependencies.
 
 
 ## GITHUB
-* [nimbleservice](http://github.com/charliemitchell/nimble) 
+* [nimbleservice](http://www.github.com/charliemitchell/nimble) 
