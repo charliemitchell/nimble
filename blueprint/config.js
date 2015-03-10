@@ -30,6 +30,40 @@ module.exports = {
     // CSRF
     csrf : {
 
+    },
+
+    // Rabbit MQ / Wascally ()
+
+    rabbitDefaults : {
+        routingKey : 'routingKey',
+        type : 'message',
+        exchange : 'exchange'
+    },
+
+    rabbit: {
+        connection: {
+            user: 'guest',
+            pass: 'guest',
+            server: 'localhost',
+            port: 5672,
+            vhost: '%2f'
+        },
+        queues: [{
+            name: 'cloudamqp-queue',
+            subscribe: true,
+            durable: true
+        }],
+        exchanges: [{
+            name: "exchange",
+            type: "direct",
+            persistent: true,
+            durable: true
+        }],
+        bindings: [{
+            exchange: 'exchange',
+            target: 'cloudamqp-queue',
+            keys: ["routingKey"]
+        }]
     }
 
 }

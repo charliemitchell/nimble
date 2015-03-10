@@ -32,7 +32,7 @@ if (argv.v || argv.version || (argv._[0] && _.contains(['v', 'version'], argv._[
         console.log("It looks like you already created a service. Nimble will refuse to overwrite an existing service. Coming Soon: 'nimbleapi' this framework will support multiple APIs.".red);
         return;
     }
-
+    
     if (argv._[1]) {
         console.log("Generate API For", argv._[1]);
         ncp(path.resolve((__dirname).replace('bin', ""), 'blueprint'), process.cwd(), function(err) {
@@ -44,13 +44,36 @@ if (argv.v || argv.version || (argv._[0] && _.contains(['v', 'version'], argv._[
             fs.mkdirSync(process.cwd() + '/node_modules');
             fs.mkdirSync(process.cwd() + '/node_modules/nimbleservice');
 
-            ncp(nimble, node_modules, function(err) {
-                console.log(err ? err : "Succes");
+            if (argv._[2] && _.contains(['r', 'rabbit'], argv._[2])) {
+                var package = fs.readFileSync('./package.json', 'utf-8'),
+                    pack = ',\n    "wascally" : "^0.2.3"';
+                fs.writeFileSync('./package.json', package.replace('"nimbleservice" : "latest"', '"nimbleservice":"latest"' + pack));
+            }
+
+            console.log("Installing Packages...".yellow);
+
+            var npm = child.spawn('npm', ['install'], {
+                cwd : process.cwd()
             });
+            npm.stdout.setEncoding('utf8');
+            npm.stdout.on('data', function(stdout) {
+                console.log(('NPM >  ' +stdout).yellow);
+            });
+
+            npm.on('close', function (code) {
+                
+                if (code === 0) {
+                    console.log("All Done! ".green);
+                } else {
+                    console.log("ERROR: NPM could not install required packages, You will have to do it manually".red)
+                }
+            });
+
+            // ncp(nimble, node_modules, function(err) {
+            //     console.log(err ? err : "Succes");
+            // });
         });
         console.log(path.resolve(__dirname, 'blueprint'), process.cwd())
-        // var model = argv._.slice(2, argv._.length);
-        // console.log("You are chossing the outer keys for your model", model);
     } else {
         console.log("You need to choose a name for the api you wish to generate");
     }

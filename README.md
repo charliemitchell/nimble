@@ -147,6 +147,38 @@ As you can see you have an array of Get, Post, Put, Delete methods. the combinat
 * action : the controller method to call when this route is matched
 * policy : the policy method to call in order to determine if the action is allowed. * see policies.js
 
+### Support for RabbitMQ / Wascally right out of the box
+If you would like to use the Pub/Sub etc.. simple specify it when you generate your api. 
+```sh 
+$ nimble api foo rabbit
+```
+or the truncated version
+```sh 
+$ nimble a foo r
+```
+
+Then in your hooks file or your controller require in rabbit.
+```js
+    var rabbit = require('./rabbit');
+    rabbit.subscribe({
+        type : 'message',
+        handler : function (msg) {
+            console.log("Message Received!");
+            try {
+                console.log(msg.body);
+                msg.ack();
+            } catch (err) {
+                msg.nack();
+            }
+        }
+    });
+    
+    rabbit.publish({
+        type : "message",
+        body : "Hello Pub/Sub"
+    });
+```
+
 
 ### Nimble Service Exposes any of it's dependencies to you via the nimbleservice object.
 This way we don't need to have duplicate dependencies.

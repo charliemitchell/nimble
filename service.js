@@ -35,6 +35,7 @@ module.exports = function () {
         cookieParser = require('cookie-parser'),
         policies = require(process.cwd() +'/policies'),
         verbose = require('./logger').onVerbose,
+        rabbit = false,
         applyPolicy = function (policy, method) {
             return function (req, res) {
                 if (policy) {
@@ -53,6 +54,19 @@ module.exports = function () {
                 }
             }
         };
+
+
+    // See if Wascally is installed
+    try {
+        rabbit = require('wascally');
+    } catch (e) {
+        verbose("Nimble: Not Using RabbitMQ");
+    }
+
+    if (rabbit) {
+        rabbit.configure(config.rabbit);
+        verbose("Nimble: Using RabbitMQ");
+    }
 
     if (hooks.app) {
         verbose("Nimble: Configuring App");
