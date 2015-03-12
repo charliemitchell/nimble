@@ -38,16 +38,20 @@ module.exports = function () {
         rabbit = false,
         applyPolicy = function (policy, method) {
             return function (req, res) {
+
+                var accept = function () {
+                        method(req, res);
+                    },
+                    reject = function () {
+                        policies.onFailure(req, res);
+                    };
+
                 if (policy) {
                     if (policies[policy]) {
-                        if (policies[policy](req, res)) {
-                            method(req, res);
-                        } else {
-                            policies.onFailure(req, res);
-                        }
+                        policies[policy](req, res, accept, reject);
                     } else {
                         console.log(("Nimble: The Policy '" + policy + "' Does Not exist, therefore the request was denied").red);
-                        policies.onFailure(req, res);
+                        reject();
                     }
                 } else { // No Policy, Allow it
                     method(req, res);

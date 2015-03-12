@@ -94,15 +94,15 @@ module.exports = {
         res.json({auth : false, error : "Not Logged In"}); // <---- What do you do when they are not logged in
     },
 
-    authenticated : function (req, res) {
+    authenticated : function (req, res, accept, reject) {
         if (req.session) {
             if (req.session.loggedin) { // <--- what key on the session say's they are logged in ?
-                return true;
+                accept(); // accept the request, all is good
             } else {
-                return false;
+                reject(); // reject the request, this will end up calling the above onFailure method
             }
         } else {
-            return false;
+            reject(); 
         }
     }
 
