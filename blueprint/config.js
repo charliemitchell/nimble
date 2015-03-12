@@ -21,7 +21,7 @@ module.exports = {
       secret: 'Your session secret'
     },
 
-    // MongoDB
+    // MongoDB (Just Remove this entire key if you would like to run without mongo DB)
     mongodb : {
         host : 'localhost',
         port : 27017,
