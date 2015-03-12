@@ -85,10 +85,13 @@ module.exports = function () {
             hooks.onBeforeMongoose(mongoose, server, app, express);
         }
 
-        // Connect To MongoDB using our ORM
-        mongoose.connect('mongodb://'+config.mongodb.host+':'+config.mongodb.port + '/' + config.mongodb.database);
-
-        verbose("Nimble: Connecting To".yellow, ('mongodb://'+config.mongodb.host+':'+config.mongodb.port + '/' + config.mongodb.database).yellow);
+        if (config.mongodb) {
+            // Connect To MongoDB using our ORM
+            mongoose.connect('mongodb://'+config.mongodb.host+':'+config.mongodb.port + '/' + config.mongodb.database);
+            verbose("Nimble: Connecting To".yellow, ('mongodb://'+config.mongodb.host+':'+config.mongodb.port + '/' + config.mongodb.database).yellow);
+        } else {
+            verbose("Nimble: Bypassing Connection To Mongo DB.".yellow);
+        }
 
         verbose("Nimble: Configuring Express Server".yellow)
         // Config

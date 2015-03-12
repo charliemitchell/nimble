@@ -20,6 +20,7 @@ module.exports = {
       name : 'yourcookie.sid',
       secret: 'Your session secret'
     },
+
     // MongoDB
     mongodb : {
         host : 'localhost',
