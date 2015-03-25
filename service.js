@@ -1,4 +1,4 @@
-module.exports = function () {
+module.exports = function (callback) {
     var hooks,
         fs = require('fs');
 
@@ -208,5 +208,6 @@ module.exports = function () {
           console.log('  > Nimble: Server Listening On:'.green, (add + ':' + config.port.toString()).green);
         });
 
+        callback(app, express, server);
     });
 }
