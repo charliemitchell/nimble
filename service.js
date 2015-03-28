@@ -42,8 +42,8 @@ module.exports = function (callback) {
                 var accept = function () {
                         method(req, res);
                     },
-                    reject = function () {
-                        policies.onFailure(req, res);
+                    reject = function (custom) {
+                        policies.onFailure(req, res, custom);
                     };
 
                 if (policy) {
@@ -68,7 +68,7 @@ module.exports = function (callback) {
     }
 
     if (rabbit) {
-        rabbit.configure(config.rabbit);
+        rabbit.configure(require(process.cwd() +'/rabbit').config.rabbit);
         verbose("Nimble: Using RabbitMQ");
     }
 
@@ -208,6 +208,8 @@ module.exports = function (callback) {
           console.log('  > Nimble: Server Listening On:'.green, (add + ':' + config.port.toString()).green);
         });
 
-        callback(app, express, server);
+        if (callback) {
+            callback(app, express, server);
+        }
     });
 }

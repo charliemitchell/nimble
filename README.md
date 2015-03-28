@@ -197,8 +197,18 @@ This way we don't need to have duplicate dependencies.
     require('nimbleservice').moment    // <-- awesome date library
 ```
 
+## Docker
+If you are using docker, nimble will automatically generate a Dockerfile for you. If Not, Just ignore it.
+## Vagrant
+Nimble will auto generate a Vagrant file with Ubuntu as part of the default blueprint. It also includes a bootstrap.sh file that will run when Vagrant Creates your VM. By Default it installs docker.
+## Stubs (Blueprinting)
+With Nimble you can create stubs and generate new services based on any template you would like. The templating is very straight forward. See the blueprints folder to see what a blueprint looks like.
+* To Generate a service from a blueprint
+* `nimble stub /path/to/stub/ --model users`
+
+This will (recursively) copy all files from the path given to the current working directory, and fill in all of the template variables with the name of the model given.
 
 
 
 ## GITHUB
-* [nimbleservice](http://www.github.com/charliemitchell/nimble) 
+* [nimbleservice](https://www.github.com/charliemitchell/nimble) 
