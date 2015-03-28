@@ -20,10 +20,10 @@ Expect there to be a bit of version-itus until v1.0.0
 ## Running / Development
 
 *  to create a new nimble service 
- * Create a Folder Named foo: `nimble new foo`
+ * Create a Folder Named foo: `nimble new foo` OR  `mkdir foo`
  * Go Inside the folder: `cd foo`
- * Generate a Service that listens to the route bar: `nimble api bar`
- * Start The Server: `nimble s`
+ * Generate a Service that listens to the route bar: `nimble api bar && cd src`
+ * Start The Server: `nimble s` Or run the tests `npm test`
 * Visit your app at [http://localhost:4242/bar](http://localhost:4242/bar).
 
 ## Some Built In Validations
@@ -208,7 +208,14 @@ With Nimble you can create stubs and generate new services based on any template
 
 This will (recursively) copy all files from the path given to the current working directory, and fill in all of the template variables with the name of the model given.
 
+## Testing
+Some basic tests are written for you, any route that you define in the router will be tested when running npm test. You should run your tests from the src directory.
 
+## Additional Commands
+`nimble set port 1234` will change the port to 1234 in your config file, (and your dockerfile if you have one). (you can pass in any number for your port)
+
+## Common Mistakes
+You must use a Content-Type header in your request, otherwise the body will never get parsed. (Talking to you POSTMAN people who forget to use headers)
 
 ## GITHUB
 * [nimbleservice](https://www.github.com/charliemitchell/nimble) 

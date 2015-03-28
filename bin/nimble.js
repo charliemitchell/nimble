@@ -159,9 +159,7 @@ else if (argv.stub || (argv._[0] && _.contains(['stub'], argv._[0]))) {
         var pathToStub = argv._[1],
             model = argv.model,
             package,
-            npm = child.spawn('npm', ['install'], {
-                cwd: process.cwd() + '/src'
-            });
+            npm;
 
         if (fs.existsSync(path.join(process.cwd(), '/package.json'))) {
             console.log("It looks like you already created a service. Nimble will refuse to overwrite an existing service. Coming Soon: 'nimbleapi' this framework will support multiple APIs.".red);
@@ -183,6 +181,10 @@ else if (argv.stub || (argv._[0] && _.contains(['stub'], argv._[0]))) {
         if (fs.existsSync(pathToStub)) {
 
             ncp(pathToStub, process.cwd(), function(err) {
+
+                npm = child.spawn('npm', ['install'], {
+                    cwd: process.cwd() + '/src'
+                });
 
                 fs.writeFileSync('./src/model.js', fs.readFileSync('./src/model.js', 'utf-8').replace(/{{model}}/g, model));
                 fs.writeFileSync('./src/router.js', fs.readFileSync('./src/router.js', 'utf-8').replace(/{{api}}/g, model));

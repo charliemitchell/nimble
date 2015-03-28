@@ -2,7 +2,7 @@ var localhost = process.env.LOCALHOST || 'localhost';
 
 module.exports = {
 
-    port : 4242, // What port should this service handle
+    port : 4242, /*ns-port*/ // <-- Leave that comment if you would like to run `nimble set port 4345`
 
     sessionless : false, // Set True if you don't want to use a session
 
