@@ -27,13 +27,13 @@ RUN cd /var/www && npm install
 COPY src/* /var/www/
 
 # Additional Environmental Variable (Define if you would like)
-ENV LOCALKEY = mylocalkey
+ENV LOCALKEY mylocalkey
 
 # Use process.env.LOCALHOST
-ENV LOCALHOST = http://172.17.42.1
+ENV LOCALHOST http://172.17.42.1
 
 # if (process.env.ENVIRONMENT === 'production') { do stuff }
-ENV ENVIRONMENT = production
+ENV ENVIRONMENT production
 
 # Run the App in var/www 
 WORKDIR /var/www/
