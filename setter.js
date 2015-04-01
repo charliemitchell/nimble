@@ -88,7 +88,12 @@ var setter = {
              }
 
              return out.substring(0, out.length - 1);
-        }
+        },
+        number : function (string, onNaN ) {
+            onNaN = onNaN === undefined ? 0 : onNaN;
+            string = setter.sanitize(string);
+            return parseFloat(string) || onNaN;
+        },
     }
 };
 

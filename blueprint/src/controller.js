@@ -1,45 +1,73 @@
 var Model = require('./model');
+
 require('nimbleservice').colors;
 
+function onError (res, err) {
+    res.status(500).json({
+        error : err
+    });
+}
+
 module.exports = {
+
     GET : function (req, res) {
-        Model.find(function (a,b) {
-            res.send(b);
+        Model.find(function (err, doc) {
+            if (err) {
+                onError(res, err);
+            } else {
+                res.status(200).json(doc);
+            }    
         });
     },
     
     findOne : function (req, res) {
-         Model.find({_id: req.params.id},function (a,b) {
-            res.send(b);
+         Model.findOne({
+            _id: req.params.id
+        }).exec(function (err, doc) {
+            if (err) {
+                onError(res, err);
+            } else {
+                res.status(200).json(doc);
+            }    
         });
     },
 
     POST : function (req, res) {
         new Model(req.body).save(function (err, doc) {
             if (err) {
-                console.log('oops! Could not save the model'.red);
-                res.json({auth : true, error : "Error saving the model"})
+                onError(res, err);
             } else {
-                res.json({auth : true, results : doc });
+                // You should set a location header when POSTing
+                res.location('http://www.{{mywebapp.com}}/api/{{model}}/' + doc._id).json(doc);
             }
-
         });
     },
 
-    // Using the Upsert method *Works
     PUT : function (req, res) {
 
-        Model.findOne({_id: req.params.id}).remove(function () {
-            req.body._id = req.params.id;
-            new Model(req.body).save();
-            res.send(req.body);
+        Model.findOne({_id: req.params.id}).remove(function (err) {
+            if (err) {
+                onError(res, err);
+            } else {
+                req.body._id = req.params.id;
+                new Model(req.body).save(function (err, doc) {
+                    if (err) {
+                        onError(res, err);
+                    } else {
+                        res.status(200).json(doc);
+                    }
+                });
+            }
         });
     },
 
-    // *works
     DELETE : function (req, res) {
-        Model.findOne({_id: req.params.id}).remove(function () {
+        Model.findOne({_id: req.params.id}).remove(function (err) {
+            if (err) {
+               onError(res, err);
+            } else {
+                res.status(200).send(req.params.id);
+            }
         });
-        res.send(req.params.id)
     }
 }

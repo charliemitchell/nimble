@@ -1,6 +1,9 @@
+require('./exitHandler')();
+
 module.exports = function (callback) {
     var hooks,
-        fs = require('fs');
+        fs = require('fs'),
+        config = require(process.cwd() +'/config');
 
     // Prevent Version Issue
     if (fs.existsSync(process.cwd() +'/hooks.js')) {
@@ -9,8 +12,6 @@ module.exports = function (callback) {
         console.log("nimbleservice now supports a hooks file. Grab one from our github at http://raw.githubusercontent.com/charliemitchell/nimble/master/blueprint/hooks.js");
         hooks = {};
     }
-
-    var config = require(process.cwd() +'/config');
         
     // Support Hiding the logo
     if (config.hideLogo !== true) {
@@ -18,8 +19,6 @@ module.exports = function (callback) {
     } else {
         console.log("  > Service Starting...".green)
     }
-
-    require('./exitHandler')();
 
     var application_root = __dirname,
         globalReport = require('./globalReport'),
@@ -149,6 +148,12 @@ module.exports = function (callback) {
             verbose("Nimble: onBeforeRouter");
             hooks.onBeforeRouter(server, app, express);
         }
+
+        app.use(function (req, res, next) {
+            app.disable( 'x-powered-by' );
+            res.setHeader( 'X-Powered-By', 'Express/Nimbleservice' );
+            next();
+        });
 
         app.use(require('errorhandler')({ dumpExceptions: true, showStack: true }));
         
