@@ -213,7 +213,7 @@ module.exports = function (callback) {
           console.log('  > Nimble: Server Listening On:'.green, (add + ':' + config.port.toString()).green);
         });
 
-        if (callback) {
+        if (callback && typeof callback === "function") {
             callback(app, express, server);
         }
     });
