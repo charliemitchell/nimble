@@ -76,7 +76,7 @@ Nimble comes packaged with some built in validations for your model. We use Goog
         /* Example
             name : {
                 type : String,
-                setter : setter.titleCase
+                set : setter.titleCase
             },
             address : {
                 type : String
