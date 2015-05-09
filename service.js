@@ -89,10 +89,26 @@ module.exports = function (callback) {
         }
 
         if (config.mongodb) {
-            // Connect To MongoDB using our ORM
-            mongoose.connect('mongodb://'+config.mongodb.host+':'+config.mongodb.port + '/' + config.mongodb.database);
-            verbose("Nimble: Connecting To".yellow, ('mongodb://'+config.mongodb.host+':'+config.mongodb.port + '/' + config.mongodb.database).yellow);
+
+            var password = (config.mongodb.username && config.mongodb.password) ? (config.mongodb.username + ":" + config.mongodb.password + "@") : "";
+
+            if (config.mongodb.replicaset) {
+                
+                var replicaset = config.mongodb.replicaset.connection;
+                mongoose.connect('mongodb://' + password + replicaset + '/' + config.mongodb.database);
+                verbose("Nimble: Connecting To Replica Set".yellow, ('mongodb://' + replicaset + '/' + config.mongodb.database).yellow);
+
+            } else {
+                
+                // Connect To MongoDB using our ORM
+                mongoose.connect('mongodb://' + password + config.mongodb.host+':'+config.mongodb.port + '/' + config.mongodb.database);
+                verbose("Nimble: Connecting To".yellow, ('mongodb://'+config.mongodb.host+':'+config.mongodb.port + '/' + config.mongodb.database).yellow);
+
+            }
+            
+        
         } else {
+            
             verbose("Nimble: Bypassing Connection To Mongo DB.".yellow);
         }
 
