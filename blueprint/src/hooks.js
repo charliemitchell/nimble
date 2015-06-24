@@ -3,7 +3,7 @@ module.exports = {
         
     },
 
-    onBeforeMongoose : function (mongoose, app, express) {
+    onBeforeMongoose : function (mongoose, server, app, express) {
 
     },
 
