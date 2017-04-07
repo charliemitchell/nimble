@@ -2,7 +2,6 @@ var redis = require("redis"),
     config = require(process.cwd() + '/config'),
     verbose = require('./logger').onVerbose,
     cookieparser = require('cookie-parser'),
-    cookie = require('express/node_modules/cookie'),
     session = require('express-session'),
     RedisStore = require('connect-redis')(session),
     client = redis.createClient(config.redis.port, config.redis.host),
@@ -42,7 +41,7 @@ var middleware = {
     readSession: function(req, res, next) {
 
         if (req.headers.cookie) {
-            var cookieItem = cookie.parse(req.headers.cookie);
+            var cookieItem = cookieparser.JSONCookie(req.headers.cookie);
             if (cookieItem[config.cookie.name]) {
                 var sessionId = cookieparser.signedCookie(cookieItem[config.cookie.name], config.cookie.secret);
                 store.get(sessionId, function(err, thisSession) {
